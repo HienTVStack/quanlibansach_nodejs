@@ -4,13 +4,15 @@ Yêu cầu:
 	1. Cài đặt Visual studio code (VS Code)
 	2. MongoDB Compass
 	3. NodeJS
+
 Sử dụng ứng dụng:
 
 1. Mở ứng dụng ( folder) bằng vs code.
 2. Mở terminar trên visual code.
-3. Thực hiện lệnh "npm run start"
-4. Cho phép server chạy trên port :3000
-5. Mở trình duyệt ( chrome, ID, CocCoc,.... ) với URL
+3. Thực hiện lệnh "npm i"
+4. Thực hiện lệnh "npm run start"
+5. Cho phép server chạy trên port :3000
+6. Mở trình duyệt ( chrome, ID, CocCoc,.... ) với URL
 	+ Phía khách hàng: localhoast:3000
 	+ Phía ADMIN: localhost:3000/trang-quan-li/dang-nhap
 
