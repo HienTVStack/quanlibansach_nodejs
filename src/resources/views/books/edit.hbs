@@ -1,0 +1,99 @@
+{{>menu-down-admin}}
+<div class="all-content-wrapper">
+    {{!-- Create books start--}}
+{{>logo-header-main}}
+<div class="header-advance-area">
+    {{>header-top}}
+    {{>search-header}}
+</div>
+{{!-- {{>summary-number}} --}}
+<div class="single-product-tab-area mg-tb-15">
+    <!-- Single pro tab review Start-->
+    <div class="single-pro-review-area">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <div class="review-tab-pro-inner">
+                        <ul id="myTab3" class="tab-review-design">
+                            <li class="active">
+                                <a href="#description"><i class="fa fa-pencil" aria-hidden="true"></i> Product Edit</a>
+                            </li>
+                            <li>
+                                <a href="#reviews"><i class="fa fa-file-image-o" aria-hidden="true"></i> Pictures</a>
+                            </li>
+                            <li>
+                                <a href="#INFORMATION"><i class="fa fa-commenting" aria-hidden="true"></i> Review</a>
+                            </li>
+                        </ul>
+                        <div id="myTabContent" class="tab-content custom-product-edit">
+                            <form action="/trang-quan-li/sach/{{book._id}}?_method=PUT" method="POST">
+                                <div class="product-tab-list tab-pane fade active in" id="description">
+                                <div class="row">
+                                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                                        <div class="review-content-section">
+                                            <div class="input-group mg-b-pro-edt">
+                                                <span class="input-group-addon"><i class="fa fa-user" aria-hidden="true"></i></span>
+                                                <input type="text" class="form-control" placeholder="Tên sách" value="{{book.name}}" name="name" />
+                                            </div>
+                                            <div class="input-group mg-b-pro-edt">
+                                                <span class="input-group-addon"><i class="fa fa-pencil" aria-hidden="true"></i></span>
+                                                <input type="text" class="form-control" placeholder="Tác giả" value="{{book.author}}" name="author" />
+                                            </div>
+                                            <div class="input-group mg-b-pro-edt">
+                                                <span class="input-group-addon"><i class="fa fa-usd" aria-hidden="true"></i></span>
+                                                <input type="text" class="form-control" placeholder="Giá bán" value="{{book.price}}" name="price" />
+                                            </div>
+                                           
+                                            <div class="input-group mg-b-pro-edt">
+                                                <span class="input-group-addon"><i class="fa fa-qrcode" aria-hidden="true"></i></span>
+                                                <input type="text" class="form-control" placeholder="Số lượng" value="{{book.quantityStock}}" name="quantityStock" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                                        <div class="review-content-section">
+                                            <div class="input-group mg-b-pro-edt">
+                                                <span class="input-group-addon"><i class="fa fa-ticket" aria-hidden="true"></i></span>
+                                                <textarea type="text" class="form-control" placeholder="Mô tả" name="description">{{book.description}}</textarea>
+                                            </div>
+                                            <div class="input-group mg-b-pro-edt">
+                                                {{!-- <span class="input-group-addon"><i class="fa fa-ticket" aria-hidden="true"></i></span> --}}
+                                                <label for="image" class="input-group-addon">Hình ảnh</label>
+                                                <input type="file" style="margin-left: 30px;"  name="image" />
+                                            </div>
+                                          
+                                            
+                                            <select name="select" class="form-control pro-edt-select form-control-primary">
+                                                {{!-- <option value="">-- chọn loại sách --</option>                                                 --}}
+                                                {{#each categories}}
+                                                    {{!-- {{#ifCond this.type book.type}}
+                                                         <option value="{{this.type}}" selected>{{this.name}}</option>
+                                                    {{else }}
+                                                        <option value="{{this.type}}">{{this.name}}</option>
+                                                    {{/ifCond}}  --}}
+                                                    
+                                                     <option value="{{this.type}}">{{this.name}}</option>
+                                                {{/each}}
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                        <div class="text-center mg-b-pro-edt custom-pro-edt-ds">
+                                            <button type="submit" class="btn btn-primary waves-effect waves-light m-r-10">Save</button>
+                                            <button type="button" class="btn btn-warning waves-effect waves-light">Discard</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{{>footer-admin}}
+</div>

@@ -1,0 +1,155 @@
+{{>menu-down-admin}}
+<div class="all-content-wrapper">
+    {{>logo-header-main}}
+    <div class="header-advance-area">
+        {{>header-top}}
+    </div>
+    <div class="single-product-tab-area mg-tb-15">
+        <div class="single-pro-review-area">
+            <div class="container-fluid">
+                <div class="product-tab-list tab-pane fade active in" id="description">
+                    <h1 style="width: 100%; text-align: center;">CHỨNG TỪ ĐẶT HÀNG TỪ NHÀ CUNG CẤP</h1>
+                    <div class="row">
+                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                            <div class="review-content-section">
+                                <div class="input-group mg-b-pro-edt">
+                                    <label for="image" class="input-group-addon">Nhà cung cấp</label>
+                                    <select name="name" class="form-control pro-edt-select form-control-primary">
+                                        {{#if nameSupplier}}
+                                        <option value="{{nameSupplier}}">{{nameSupplier}}</option>
+                                        {{else}}
+                                        <option value="">Không có nhà cung cấp nào cả</option>
+                                        {{/if}}
+                                    </select>
+                                </div>
+                                <div class="input-group mg-b-pro-edt">
+                                    <label for="image" class="input-group-addon">Nguời đặt hàng</label>
+                                    <input type="text" class="form-control" value="Cửa hàng sách SHOPPER" name="employee" />
+                                </div>
+                                <div class="input-group mg-b-pro-edt">
+                                    <label for="image" class="input-group-addon">Địa chỉ nhận hàng</label>
+                                    <input type="text" class="form-control" value="140 Lê Trọng Tấn, phường Tây Thạnh, quận Tân Phú, thành phố Hồ Chí Minh" name="addressDelivery" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                            <div class="review-content-section">
+                                <div class="input-group mg-b-pro-edt">
+                                    <label for="image" class="input-group-addon">Ngày đặt hàng</label>
+                                    <input type="text" class="form-control" id="dateOrder" name="dateOrder" />
+                                </div>
+                                <div class="input-group mg-b-pro-edt">
+                                    <label for="image" class="input-group-addon">Ngày hẹn giao</label>
+                                    <input type="text" class="form-control" value="{{dateDelivery}}" placeholder="Số lượng" name="dateDelivery" />
+                                    {{!-- <input type="text" class="form-control" placeholder="Số lượng" name="dateDelivery" /> --}}
+                                </div>
+                                <div class="input-group mg-b-pro-edt">
+                                    <label for="image" class="input-group-addon">Mã chứng từ</label>
+                                    <input type="text" class="form-control" placeholder="Số lượng" value="{{_id}}" name="quantityStock" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="single-product-tab-area mg-tb-15">
+        <div class="single-pro-review-area">
+            <div class="container-fluid">
+                <div class="product-tab-list tab-pane fade active in" id="description">
+                    <h1 style="width: 100%; text-align: center;">THÔNG TIN ĐẶT HÀNG</h1>
+                    <div class="row">
+                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                            <div class="review-content-section">
+                                <div class="input-group mg-b-pro-edt">
+                                    <label for="image" class="input-group-addon">Tên nhân viên</label>
+                                    <input type="text" class="form-control" name="employee" value="{{userName}}" />
+                                </div>
+                                <div class="input-group mg-b-pro-edt">
+                                    <label for="image" class="input-group-addon">Giảm giá</label>
+                                    <input type="text" class="form-control" value="0%" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                            <div class="review-content-section">
+                                <div class="input-group mg-b-pro-edt">
+                                    <label for="image" class="input-group-addon">Số lượng</label>
+                                    <input type="text" class="form-control" value="{{quantity}}" name="quantity" />
+                                </div>
+                                <div class="input-group mg-b-pro-edt">
+                                    <label for="image" class="input-group-addon">Thành tiền</label>
+                                    <input type="text" class="form-control" id="totalPrice" disabled name="totalPrice" value="{{totalPrice}}" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="product-status mg-tb-15">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <div class="product-status-wrap">
+                        <h1 style="width: 100%; text-align: center;">DANH SÁCH SẢN PHẨM ĐẶT HÀNG</h1>
+
+                        <table>
+                            <tr>
+                                <th>STT</th>
+                                <th>Tên sách</th>
+                                <th>Số lượng đặt</th>
+                                <th>Đơn giá</th>
+                                <th>Thành tiền</th>
+                            </tr>
+                            {{#each products}}
+                            <tr>
+                                <td>{{sum @index 1}}</td>
+
+                                <td>
+                                    {{this.name}}
+                                </td>
+                                <td>
+                                    {{this.quantity}}
+                                </td>
+                                <td class="price">{{this.price}}</td>
+                                <td class="price">{{this.totalPrice}}</td>
+                            </tr>
+                            {{else}}
+                            <tr>
+                                <td colspan="10" style="text-align: center;">
+                                    <h1>Chưa có sản phẩm</h1>
+                                </td>
+                            </tr>
+                            {{/each}}
+                        </table>
+                        <div style="width: 100%; text-align: center;">
+                            <form action="/trang-quan-li/sach/xuat-file-dat-hang" method="post">
+                                <button type="submit">Xuất file</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {{>footer-admin}}
+</div>
+
+<script>
+    document.getElementById("dateOrder").value = new Date(Date.now()).toLocaleDateString();
+
+    document.addEventListener("DOMContentLoaded", function () {
+        //price
+        let priceProduct = document.querySelectorAll('.price');
+        let totalPrice = document.getElementById('totalPrice');
+        
+        priceProduct.forEach((item, index) => {
+            item.textContent = `${formatCash(item.textContent)} VNĐ`;
+        });
+        totalPrice.value = `${formatCash(document.getElementById('totalPrice').value)} VNĐ`;
+    });
+</script>

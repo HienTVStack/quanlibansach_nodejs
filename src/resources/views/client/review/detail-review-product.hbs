@@ -1,0 +1,250 @@
+{{>topbar-client}} {{>navbar-client}} {{>page-header-client}}
+<!-- Shop Detail Start -->
+<div class="container-fluid py-5">
+    <div class="row px-xl-5">
+        <div class="col-lg-5 pb-5">
+            <div id="product-carousel" class="carousel slide" data-ride="carousel">
+                <div class="carousel-inner border">
+                    <div class="carousel-item active" style="max-height: 750px !important">
+                        <img class="w-100 h-100" src="/assets/img/product/{{books.image}}" alt="Image" />
+                    </div>
+                    {{!-- <div class="carousel-item">
+                        <img class="w-100 h-100" src="/assets/img/test-page/product-2.jpg" alt="Image" />
+                    </div>
+                    <div class="carousel-item">
+                        <img class="w-100 h-100" src="/assets/img/test-page/product-3.jpg" alt="Image" />
+                    </div>
+                    <div class="carousel-item">
+                        <img class="w-100 h-100" src="/assets/img/test-page/product-4.jpg" alt="Image" />
+                    </div> --}}
+                </div>
+                <a class="carousel-control-prev" href="#product-carousel" data-slide="prev">
+                    <i class="fa fa-2x fa-angle-left text-dark"></i>
+                </a>
+                <a class="carousel-control-next" href="#product-carousel" data-slide="next">
+                    <i class="fa fa-2x fa-angle-right text-dark"></i>
+                </a>
+            </div>
+        </div>
+
+        <div class="col-lg-7 pb-5">
+            <h3 class="font-weight-semi-bold">{{books.name}}</h3>
+            <div class="d-flex mb-3">
+                <div class="text-primary mr-2">
+                    <small class="fas fa-star"></small>
+                    <small class="fas fa-star"></small>
+                    <small class="fas fa-star"></small>
+                    <small class="fas fa-star-half-alt"></small>
+                    <small class="far fa-star"></small>
+                </div>
+                <small class="pt-1">(50 Reviews)</small>
+            </div>
+            <h3 class="font-weight-semi-bold mb-4"><span id="price">{{books.price}}</span></h3>
+            <p class="mb-4">{{books.descriptionShort}}</p>
+            <div class="d-flex mb-3">
+                <p class="text-dark font-weight-medium mb-0 mr-3">Đã bán: {{books.quantitySell}} || {{books.quantityStock}} sản phẩm có sẵn</p>
+                
+               
+            </div>
+            <div class="d-flex mb-4">
+                <p class="text-dark font-weight-medium mb-0 mr-3">Tác giả: <a href="https://en.wikipedia.org/wiki/{{books.author}}">{{books.author}}</a></p>
+            </div>
+            <div class="d-flex mb-4">
+                <p class="text-dark font-weight-medium mb-0 mr-3">Chương trình giảm giá: Sản phẩm chưa áp dụng giảm giá !!!</p>
+            </div>
+            <div class="d-flex mb-4">
+                <p class="text-dark font-weight-medium mb-0 mr-3">Phí vận chuyển: Miễn phí vận chuyển toàn quốc cho đơn hàng chỉ từ 200.000 VNĐ</p>
+            </div>
+            <div class="d-flex align-items-center mb-4 pt-2">
+                <div class="input-group quantity mr-3" style="width: 130px;">
+                    <div class="input-group-btn">
+                        <button class="btn btn-primary btn-minus">
+                            <i class="fa fa-minus"></i>
+                        </button>
+                    </div>
+                    <input type="text" class="form-control bg-secondary text-center" style="margin-left: 40px;" value="1" />
+                    <div class="input-group-btn mr-5">
+                        <button class="btn btn-primary btn-plus">
+                            <i class="fa fa-plus"></i>
+                        </button>
+                    </div>
+                </div>
+                <form action="/{{books._id}}/addCart" method="POST">
+                     <button class="btn btn-primary px-3"><i class="fa fa-shopping-cart mr-1"></i> Add To Cart</button>
+                </form>
+            </div>
+            <div class="d-flex pt-2">
+                <p class="text-dark font-weight-medium mb-0 mr-2">Share on:</p>
+                <div class="d-inline-flex">
+                    <a class="text-dark px-2" href="">
+                        <i class="fab fa-facebook-f"></i>
+                    </a>
+                    <a class="text-dark px-2" href="">
+                        <i class="fab fa-twitter"></i>
+                    </a>
+                    <a class="text-dark px-2" href="">
+                        <i class="fab fa-linkedin-in"></i>
+                    </a>
+                    <a class="text-dark px-2" href="">
+                        <i class="fab fa-pinterest"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="row px-xl-5">
+        <div class="col">
+            <div class="nav nav-tabs justify-content-center border-secondary mb-4">
+                <a class="nav-item nav-link active" data-toggle="tab" href="#tab-pane-1">Mô tả - Đánh giá</a>
+            </div>
+            <div class="tab-content">
+                <div class="tab-pane show">
+                    <h4 class="mb-3">Mô tả sản phẩm</h4>
+                    <p>{{books.description}}</p>
+                </div>
+                <hr />
+                <div class="tab-pane show">
+                    <div class="row">
+                        <div class="col-md-6">
+                            {{#each count}}
+                                {{#ifCond this.count 0}}
+                                    <h4 class="mb-4">Chưa có đánh giá nào cho sản phẩm này</h4>
+                                {{else}}
+                                    <h4 class="mb-4">Đã có {{this.count}} đánh giá cho sản phẩm</h4>
+                                {{/ifCond}}
+                                 
+                            {{/each}}
+                           
+                            {{#each books.reviews}}
+                            <div class="media mb-4">
+                                <img src="/assets/img/user_icon_150670.png" alt="Image" class="img-fluid mr-3 mt-1" style="width: 45px;" />
+                                <div class="media-body">
+                                    <h6>
+                                        {{this.name}}<small> - <i>{{this.createdAt}}</i></small>
+                                    </h6>
+                                    <div class="text-primary mb-2">
+                                        {{#ifCond this.star 0}}
+                                            {{#for 0 5 1}}
+                                                <i class="far fa-star"></i>
+                                            {{/for}}
+                                        {{else}}
+                                            {{#for 0 this.star 1}}
+                                                <i class="fas fa-star"></i>
+                                            {{/for}}
+                                            {{#for 0 (subtraction 5 this.star) 1}}
+                                                <i class="far fa-star"></i>
+                                            {{/for}}
+                                        {{/ifCond}}
+                                        
+                                    </div>
+                                    <p>{{this.reviewText}}</p>
+                                </div>
+                            </div>
+                            {{/each}}
+                        </div>
+                        <div class="col-md-6">
+                            <form action="/san-pham/{{books._id}}/danh-gia" method="POST">
+                                <h4 class="mb-4">Đánh giá</h4>
+                                <small>Địa chỉ email của bạn không được công bố. Những trường bắt buộc có đánh dấu *</small>
+                                <div class="d-flex my-3">
+                                    <p class="mb-0 mr-2" style="padding-top: 4px;">Đánh giá sao * :</p>
+                                    <div class="stars stars-example-css detail-stars">
+                                        <div class="review-rating">
+                                            <fieldset class="rating">
+                                                <input type="radio" id="star5" name="rating" value="5" />
+                                                <label class="full" for="star5"></label>
+                                               
+                                                <input type="radio" id="star4" name="rating" value="4" />
+                                                <label class="full" for="star4"></label>
+                                                <input type="radio" id="star3" name="rating" value="3" />
+                                                <label class="full" for="star3"></label>
+                                                <input type="radio" id="star2" name="rating" value="2" />
+                                                <label class="full" for="star2"></label>
+                                                <input type="radio" id="star1" name="rating" value="1" />
+                                                <label class="full" for="star1"></label>
+                                                <input type="radio" id="starhalf" name="rating" value="0" />
+                                            </fieldset>
+                                        </div>
+                                        <div class="clear"></div>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="message">Đánh giá của bạn *</label>
+                                    <textarea id="message" name="reviewText" required cols="30" rows="5" class="form-control"></textarea>
+                                </div>
+                                <div class="form-group">
+                                    <label for="name">Tên bạn *</label>
+                                    <input type="text" name="name" value="{{user.fullName}}" required placeholder="VD: Trần Văn Hiền" class="form-control" id="name" />
+                                </div>
+                                <div class="form-group">
+                                    <label for="email">Email *</label>
+                                    <input type="email" name="email" required placeholder="VD: hientranvan27@gmail.com" value="{{user.email}}" class="form-control" id="email" />
+                                </div>
+                                <div class="form-group mb-0">
+                                    <input type="submit" value="Gửi đánh giá" class="btn btn-primary px-3" />
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Products Start -->
+    <hr>
+    <div class="container-fluid py-5">
+        <div class="text-center mb-4">
+            <h2 class="section-title px-5"><span class="px-2">Sản phẩm cùng thể loại</span></h2>
+        </div>
+        <div class="row px-xl-5">
+            <div class="col">
+                <div class="related-carousel ">
+                    {{#each bookToType}}
+                        <div class="card product-item border-0 col col-3 sm-6 col-lg-3 col-xl-3">
+                            <div class="card-header product-img position-relative overflow-hidden bg-transparent border p-0" style="height: 430px !important">
+                                <img class="img-fluid w-100" src="/assets/img/product/{{this.image}}" alt="" >
+                            </div>
+                            <div class="card-body border-left border-right text-center p-0 pt-4 pb-3">
+                                <h6 class="text-truncate mb-3">{{this.name}}</h6>
+                                <div class="d-flex justify-content-center">
+                                    <h6>{{this.price}}</h6><h6 class="text-muted ml-2"> Đã bán: {{this.quantitySell}}</h6>
+                                </div>
+                            </div>
+                            <div class="card-footer d-flex justify-content-between bg-light border">
+                                <a href="/products/{{this._id}}/detail" class="btn btn-sm text-dark p-0"><i class="fas fa-eye text-primary mr-1"></i>View Detail</a>
+                                <a href="" class="btn btn-sm text-dark p-0"><i class="fas fa-shopping-cart text-primary mr-1"></i>Add To Cart</a>
+                            </div>
+                        </div>
+                    {{/each}}
+                    
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Products End -->
+</div>
+
+<!-- Shop Detail End -->
+{{>footer-client}}
+<!-- JavaScript Libraries -->
+<script>
+    let priceProduct = document.getElementById('price');
+    
+    function formatCash(str) {
+        return str
+            .split("")
+            .reverse()
+            .reduce((prev, next, index) => {
+                return (index % 3 ? next : next + ".") + prev;
+            });
+    }
+
+    priceProduct.textContent = `${formatCash(priceProduct.textContent)} VNĐ`
+
+</script>
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
+<script src="/assets/js/client/main.js"></script>

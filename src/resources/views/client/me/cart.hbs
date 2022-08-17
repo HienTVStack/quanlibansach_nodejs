@@ -1,0 +1,274 @@
+{{>topbar-client}} {{>navbar-client}} {{>page-header-client}}
+<style>
+    input[type="number"]::-webkit-inner-spin-button,
+    input[type="number"]::-webkit-outer-spin-button {
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        appearance: none;
+        margin: 0;
+    }
+</style>
+<form action="/hand-form-action" name="container-form" method="POST">
+    <div class="container-fluid pt-5">
+        <div class="row px-xl-5">
+            <div class="col-lg-12 table-responsive mb-5">
+                <div style="display: flex; align-items: center; margin-bottom: 20px;" class="d-flex">
+                    <input type="checkbox" id="checkbox-all" />
+                    <label class="form-check-label" style="text-align: center; margin: 0 20px 0 20px; padding-top: 5px;" for="checkbox-all">Chọn tất cả</label>
+                    <select class="form-select" aria-label="Default select example" name="action" required>
+                        <option value="">-- Chọn chức năng --</option>
+                        <option value="buy">Mua hàng</option>
+                        <option value="updateQuantity">Cập nhật số lượng</option>
+                        <option value="deleted">Xóa khỏi giỏ hàng</option>
+                    </select>
+                    <button id="checkbox-all-submit-btn" type="submit" class="btn btn-primary" disabled style="margin-left: 20px;">Thực hiện</button>
+                </div>
+                <table class="table table-bordered text-center mb-0">
+                    <thead class="bg-secondary text-dark">
+                        <tr>
+                            <th></th>
+                            <th></th>
+                            <th>Tên sản phẩm</th>
+                            <th>Giá</th>
+                            <th>Số lượng</th>
+                            <th>Tổng tiền</th>
+                            <th>Hủy bỏ</th>
+                        </tr>
+                    </thead>
+
+                    {{cart._id}}
+                    <tbody class="align-middle">
+                        {{#each cart}} {{#each cart.products}}
+                        <tr>
+                            <td class="align-middle" style="width: 50px;">
+                                <input type="checkbox" class="form-check-input" name="checkboxItem[]" value="{{this.id}}" />
+                            </td>
+                            <td class="align-middle">
+                                <img src="/assets/img/product/{{this.image}}" alt="" style="width: 50px;" />
+                            </td>
+                            <td class="align-middle">{{this.name}}</td>
+                            <td class="align-middle price">{{this.price}}</td>
+                            <td class="align-middle">
+                                <div class="input-group quantity mx-auto" style="display: flex; align-items: center; justify-content: center; width: 120px;">
+                                    <input
+                                        type="button"
+                                        id="button-minus"
+                                        value="-"
+                                        class="btn btn-sm btn-primary btn-minus"
+                                        data-field="quantity"
+                                        style="padding: 5px 10px; border-radius: 20px; display: flex; align-items: center; justify-content: center;"
+                                    />
+                                    <input
+                                        type="number"
+                                        step="1"
+                                        max="10"
+                                        style="margin: 0 10px;"
+                                        value="{{this.quantity}}"
+                                        name="quantity"
+                                        class="form-control form-control-sm bg-secondary text-center quantity-field border-0 text-center w-25"
+                                    />
+                                    <input
+                                        type="button"
+                                        id="button-plus"
+                                        value="+"
+                                        class="btn btn-sm btn-primary btn-plus"
+                                        data-field="quantity"
+                                        style="padding: 5px 10px; border-radius: 20px; display: flex; align-items: center; justify-content: center;"
+                                    />
+                                </div>
+                            </td>
+                            <td class="align-middle totalPriceItem" id="a">{{multip this.price this.quantity}}</td>
+                            <td class="align-middle">
+                                <a href="#" class="btn btn-sm btn-primary" data-toggle="modal" data-id="{{this.id}}" data-target="#delete-book-modal">
+                                    <i class="fa fa-times" aria-hidden="true"></i>
+                                </a>
+                            </td>
+                        </tr>
+                        {{/each}} {{/each}}
+                        <tr>
+                            <td colspan="4"></td>
+                            <td>Số lượng: <span id="sumQuantity">1</span></td>
+                            <td>Tổng tiền: <span id="sumTotalPrice"></span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            {{!--
+            <div class="col-lg-4">
+                <form class="mb-5" action="">
+                    <div class="input-group">
+                        <input type="text" class="form-control p-4" placeholder="Coupon Code" />
+                        <div class="input-group-append">
+                            <button class="btn btn-primary">Apply Coupon</button>
+                        </div>
+                    </div>
+                </form>
+                <div class="card border-secondary mb-5">
+                    <div class="card-header bg-secondary border-0">
+                        <h4 class="font-weight-semi-bold m-0">Cart Summary</h4>
+                    </div>
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between mb-3 pt-1">
+                            <h6 class="font-weight-medium">Subtotal</h6>
+                            <h6 class="font-weight-medium">$150</h6>
+                        </div>
+                        <div class="d-flex justify-content-between">
+                            <h6 class="font-weight-medium">Shipping</h6>
+                            <h6 class="font-weight-medium">$10</h6>
+                        </div>
+                    </div>
+                    <div class="card-footer border-secondary bg-transparent">
+                        <div class="d-flex justify-content-between mt-2">
+                            <h5 class="font-weight-bold">Total</h5>
+                            <h5 class="font-weight-bold">$160</h5>
+                        </div>
+                        <button class="btn btn-block btn-primary my-3 py-3">Proceed To Checkout</button>
+                    </div>
+                </div>
+            </div>
+            --}}
+            <div class="row"></div>
+        </div>
+    </div>
+</form>
+{{!-- Model delete --}}
+
+<div class="modal" id="delete-book-modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Xoá khỏi giỏ hàng</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                Bạn có chắc muốn loại cuốn sách này khỏi giỏ hàng không ?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Trở lại</button>
+                <button type="button" id="delete-book-btn" class="btn btn-primary">Xóa bỏ</button>
+            </div>
+        </div>
+    </div>
+</div>
+<form action="/:id/delectedCart" method="POST" name="deleted-action"></form>
+<!-- Cart End -->
+
+{{>footer-client}}
+
+<script>
+    var getPriceItem = document.querySelectorAll(".price");
+    var getTotalPriceItem = document.querySelectorAll(".totalPriceItem");
+    const totalPrice = document.querySelector("#sumTotalPrice");
+    let sumQuantity = document.querySelector('#sumQuantity');
+    let sum = 0;
+    //console.log(totalPrice);
+    function main() {
+        formatVND();
+    }
+    // Function format price VND
+    function formatVND() {
+        for (let i = 0; i < getPriceItem.length; i++) {
+            getPriceItem[i].textContent = formatCash(String(getPriceItem[i].textContent)) + "VNĐ";
+            sum += parseInt(getTotalPriceItem[i].textContent)  
+            getTotalPriceItem[i].textContent = formatCash(String(getTotalPriceItem[i].textContent)) + "VNĐ";
+        }
+        totalPrice.textContent = formatCash(String(sum)) + "VNĐ";
+        sumQuantity.textContent = formatCash(String(getPriceItem.length))
+    }
+    //formatCash VND
+    function formatCash(str) {
+        return str
+            .split("")
+            .reverse()
+            .reduce((prev, next, index) => {
+                return (index % 3 ? next : next + ".") + prev;
+            });
+    }
+
+    main();
+    document.addEventListener("DOMContentLoaded", function () {
+        var bookId;
+        var checkboxAll = $("#checkbox-all");
+        var checkboxItem = $('input[name="checkboxItem[]"]');
+        var btnSubmitCheckboxAll = $("#checkbox-all-submit-btn");
+        var containerForm = document.forms["container-form"];
+        var deletedForm = document.forms["deleted-action"];
+        var deletedBtn = document.getElementById("delete-book-btn");
+        var deleteBookModal = document.getElementById("delete-book-modal");
+
+        $("#delete-book-modal").on("show.bs.modal", function (event) {
+            var button = $(event.relatedTarget); // Button that triggered the modal
+            bookId = button.data("id"); // Extract info from data-* attributes
+        });
+
+        deletedBtn.onclick = function () {
+            deletedForm.action = `/${bookId}/deletedCart`;
+            deletedForm.submit();
+        };
+
+        checkboxAll.change("checked", function () {
+            const isCheckAll = $(this).prop("checked");
+            checkboxItem.prop("checked", isCheckAll);
+            reRenderButtonSubmitCheckboxAll();
+            btnSubmitCheckboxAll.attr("disabled", false);
+        });
+
+        checkboxItem.change("checked", function () {
+            const isCheckItem = checkboxItem.length === $('input[name="checkboxItem[]"]:checked').length;
+            checkboxAll.prop("checked", isCheckItem);
+            reRenderButtonSubmitCheckboxAll();
+            btnSubmitCheckboxAll.attr("disabled", false);
+        });
+
+        function reRenderButtonSubmitCheckboxAll() {
+            var checkboxCount = $('input[name="checkboxItem[]"]:checked').length;
+            if (checkboxCount > 0) {
+                btnSubmitCheckboxAll.removeClass("disabled");
+            } else {
+                btnSubmitCheckboxAll.addClass("disabled");
+            }
+        }
+    });
+    // change text content sumTotal price
+    //function sumTotalPriceSelectItem() {}
+
+    function incrementValue(e) {
+        e.preventDefault();
+        var fieldName = $(e.target).data("field");
+        var parent = $(e.target).closest("div");
+        var currentVal = parseInt(parent.find("input[name=" + fieldName + "]").val(), 10);
+
+        if (!isNaN(currentVal)) {
+            parent.find("input[name=" + fieldName + "]").val(currentVal + 1);
+        } else {
+            parent.find("input[name=" + fieldName + "]").val(0);
+        }
+    }
+
+    function decrementValue(e) {
+        e.preventDefault();
+        var fieldName = $(e.target).data("field");
+        var parent = $(e.target).closest("div");
+        var currentVal = parseInt(parent.find("input[name=" + fieldName + "]").val(), 10);
+
+        if (!isNaN(currentVal) && currentVal > 0) {
+            parent.find("input[name=" + fieldName + "]").val(currentVal - 1);
+        } else {
+            parent.find("input[name=" + fieldName + "]").val(0);
+        }
+    }
+
+    $(".input-group").on("click", "#button-plus", function (e) {
+        incrementValue(e);
+    });
+
+    $(".input-group").on("click", "#button-minus", function (e) {
+        decrementValue(e);
+    });
+</script>
+
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
+<script src="/assets/js/client/main.js"></script>

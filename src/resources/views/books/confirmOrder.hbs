@@ -1,0 +1,178 @@
+{{>menu-down-admin}}
+<div class="all-content-wrapper">
+    {{>logo-header-main}}
+    <div class="header-advance-area">
+        {{>header-top}} {{!-- {{>search-header}} --}}
+    </div>
+    <form action="/trang-quan-li/sach/test" name="container-form" method="POST">
+        <div class="single-product-tab-area mg-tb-15">
+            <div class="single-pro-review-area">
+                <div class="container-fluid">
+                    <div class="product-tab-list tab-pane fade active in" id="description">
+                        <h1 style="width: 100%; text-align: center;">CHỨNG TỪ ĐẶT HÀNG TỪ NHÀ CUNG CẤP</h1>
+                        <div class="row">
+                            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                                <div class="review-content-section">
+                                    <div class="input-group mg-b-pro-edt">
+                                        <label for="image" class="input-group-addon">Nhà cung cấp</label>
+                                        <select name="name" class="form-control pro-edt-select form-control-primary">
+                                            {{#if nameSupplier}}
+                                            <option value="{{nameSupplier}}">{{nameSupplier}}</option>
+                                            {{else}}
+                                            <option value="">Không có nhà cung cấp nào cả</option>
+                                            {{/if}}
+                                        </select>
+                                    </div>
+                                    <div class="input-group mg-b-pro-edt">
+                                        <label for="image" class="input-group-addon">Nguời đặt hàng</label>
+                                        <input type="text" class="form-control" value="Cửa hàng sách SHOPPER" name="employee" />
+                                    </div>
+                                    <div class="input-group mg-b-pro-edt">
+                                        <label for="image" class="input-group-addon">Địa chỉ nhận hàng</label>
+                                        <input type="text" class="form-control" value="140 Lê Trọng Tấn, phường Tây Thạnh, quận Tân Phú, thành phố Hồ Chí Minh" name="addressDelivery" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                                <div class="review-content-section">
+                                    <div class="input-group mg-b-pro-edt">
+                                        <label for="image" class="input-group-addon">Ngày đặt hàng</label>
+                                        <input type="text" class="form-control" id="dateOrder" name="dateOrder" />
+                                    </div>
+                                    <div class="input-group mg-b-pro-edt">
+                                        <label for="image" class="input-group-addon">Ngày hẹn giao</label>
+                                        <input type="date" class="form-control" placeholder="Số lượng" name="dateDelivery" />
+                                    </div>
+                                    <div class="input-group mg-b-pro-edt">
+                                        <label for="image" class="input-group-addon">Mã chứng từ</label>
+                                        <input type="text" class="form-control" placeholder="Số lượng" name="quantityStock" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div style="width: 100%; text-align: center;">
+                                <button type="submit" class="btn btn-primary">DANH SÁCH</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="product-status mg-tb-15">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                        <div class="product-status-wrap">
+                            <h1 style="width: 100%; text-align: center;">DANH SÁCH SẢN PHẨM ĐẶT HÀNG</h1>
+                            <div style="display: flex; align-items: center;" class="d-flex">
+                                <input type="checkbox" id="checkbox-all" />
+                                <label class="form-check-label" style="text-align: center; margin: 0 20px 0 20px; padding-top: 5px;" for="checkbox-all">Chọn tất cả</label>
+                                <select class="form-select" aria-label="Default select example" name="action" required>
+                                    <option value="add">Thêm vào hóa đơn</option>
+                                </select>
+                                <button id="checkbox-all-submit-btn" type="submit" class="btn btn-primary" disabled style="margin-left: 20px;">Thực hiện</button>
+                            </div>
+                            <table>
+                                <tr>
+                                    <th></th>
+                                    <th>STT</th>
+                                    <th>Tên sách</th>
+                                    <th>Số lượng đặt</th>
+                                    <th>Đơn giá</th>
+                                    <th>Chức năng</th>
+                                </tr>
+                                {{#each products}}
+                                <tr>
+                                    <td>
+                                        <input type="checkbox" checked class="form-check-input" name="checkboxItem[]" value="{{this._id}}" />
+                                    </td>
+                                    <td>{{sum @index 1}}</td>
+
+                                    <td>
+                                        {{this.name}}
+                                    </td>
+                                    <td>
+                                        <input type="text" name="quantity" value="1" />
+                                    </td>
+                                    <td class="price">{{this.price}}</td>
+                                </tr>
+                                {{else}}
+                                <tr>
+                                    <td colspan="10" style="text-align: center;">
+                                        <h1>Chưa có sản phẩm</h1>
+                                    </td>
+                                </tr>
+                                {{/each}}
+                            </table>
+                            <div style="width: 100%; text-align: center;">
+                                <button class="btn-primary btn mg-b-10" data-toggle="modal" data-target="#PrimaryModalalert">Đặt hàng</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+
+    {{>footer-admin}}
+</div>
+
+<div id="PrimaryModalalert" class="modal modal-adminpro-general default-popup-PrimaryModal fade" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-close-area modal-close-df">
+                <a class="close" data-dismiss="modal" href="#"><i class="fa fa-close"></i></a>
+            </div>
+            <div class="modal-body">
+                <i class="fa fa-check modal-check-pro"></i>
+                <h2>Đặt hàng thành công</h2>
+                <p>Nhấn "Tiếp tục" để xem kết quả đặt hàng</p>
+            </div>
+            <div class="modal-footer">
+                <a data-dismiss="modal" href="#">Cancel</a>
+                <a class="btn btn-primary" href="/trang-quan-li/sach/ket-qua-dat-hang">Tiếp tục</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    document.getElementById("dateOrder").value = new Date(Date.now()).toLocaleDateString();
+
+    document.addEventListener("DOMContentLoaded", function () {
+        var bookId;
+        // Checkbox
+        var checkboxAll = $("#checkbox-all");
+        var checkboxBookItem = $('input[name="checkboxItem[]"]');
+        var btnSubmitCheckboxAll = $("#checkbox-all-submit-btn");
+        var containerForm = document.forms["container-form"];
+        let priceProduct = document.querySelectorAll(".price");
+
+        priceProduct.forEach((price) => {
+            price.textContent = `${formatCash(price.textContent)} VNĐ`;
+        });
+
+        //Change checkbox-all
+        checkboxAll.change(function () {
+            var isCheckboxAll = $(this).prop("checked");
+            checkboxBookItem.prop("checked", isCheckboxAll);
+            reRenderButtonSubmitCheckboxAll();
+            btnSubmitCheckboxAll.attr("disabled", false);
+        });
+        // change checkbox item
+        checkboxBookItem.change(function () {
+            var isCheckItem = checkboxBookItem.length === $('input[name="checkboxItem[]"]:checked').length;
+            checkboxAll.prop("checked", isCheckItem);
+            reRenderButtonSubmitCheckboxAll();
+            btnSubmitCheckboxAll.attr("disabled", false);
+        });
+
+        function reRenderButtonSubmitCheckboxAll() {
+            var checkboxCount = $('input[name="checkboxItem[]"]:checked').length;
+            if (checkboxCount > 0) {
+                btnSubmitCheckboxAll.removeClass("disabled");
+            } else {
+                btnSubmitCheckboxAll.addClass("disabled");
+            }
+        }
+    });
+</script>

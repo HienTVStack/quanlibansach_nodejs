@@ -1,0 +1,174 @@
+{{>menu-down-admin}}
+<div class="all-content-wrapper">
+    {{>logo-header-main}}
+    <div class="header-advance-area">
+        {{>header-top}} {{!-- {{>search-header}} --}}
+    </div>
+
+    <div class="single-product-tab-area mg-tb-15">
+        <div class="single-pro-review-area">
+            <div class="container-fluid">
+                <div class="product-tab-list tab-pane fade active in" id="description">
+                    <h1 style="width: 100%; text-align: center;">CHỨNG TỪ ĐẶT HÀNG TỪ NHÀ CUNG CẤP</h1>
+                    <hr />
+                    <div class="row">
+                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                            <div class="review-content-section">
+                                <form action="/trang-quan-li/sach/don-dat-hang" method="get">
+                                    <div class="input-group mg-b-pro-edt">
+                                        <label for="image" class="input-group-addon">Mã chứng từ</label>
+                                        <input type="text" class="form-control" placeholder="Mã chứng từ" name="idDocs" />
+                                        <button class="form-control">Tìm kiếm</button>
+                                        {{!-- <a href="" class="btn btn-primary form-control">Tìm kiếm</a> --}}
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <form action="/trang-quan-li/sach/nha-cung-cap" method="POST">
+                            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                                <div class="review-content-section">
+                                    <div class="input-group mg-b-pro-edt">
+                                        <label for="image" class="input-group-addon">Nhà cung cấp</label>
+                                        {{!-- <input type="text" class="form-control" placeholder="Nhà cung cấp" name="name" /> --}}
+                                        <select name="name" class="form-control pro-edt-select form-control-primary">
+                                            {{#each suppliers}}
+                                            <option value="{{this.name}}">{{this.name}}</option>
+                                            {{else}}
+                                            <option value="">Không có nhà cung cấp nào cả</option>
+                                            {{/each}}
+                                        </select>
+                                    </div>
+                                    <div class="input-group mg-b-pro-edt">
+                                        <label for="image" class="input-group-addon">Nguời đặt hàng</label>
+                                        <input type="text" class="form-control" value="Cửa hàng sách SHOPPER" name="employee" />
+                                    </div>
+                                    <div class="input-group mg-b-pro-edt">
+                                        <label for="image" class="input-group-addon">Địa chỉ nhận hàng</label>
+                                        <input type="text" class="form-control" value="140 Lê Trọng Tấn, phường Tây Thạnh, quận Tân Phú, thành phố Hồ Chí Minh" name="addressDelivery" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                                <div class="review-content-section">
+                                    <div class="input-group mg-b-pro-edt">
+                                        <label for="image" class="input-group-addon">Ngày đặt hàng</label>
+                                        <input type="text" class="form-control" id="dateOrder" name="dateOrder" />
+                                    </div>
+                                    <div class="input-group mg-b-pro-edt">
+                                        <label for="image" class="input-group-addon">Ngày hẹn giao</label>
+                                        <input type="date" class="form-control" placeholder="Số lượng" name="dateDelivery" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div style="width: 100%; text-align: center;">
+                                <button type="submit" class="btn btn-primary">DANH SÁCH</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <form action="/trang-quan-li/sach/hand-form-action" name="container-form" method="POST">
+        <div class="product-status mg-tb-15">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                        <div class="product-status-wrap">
+                            <h1 style="width: 100%; text-align: center;">DANH SÁCH SẢN PHẨM ĐẶT HÀNG</h1>
+                            <div style="display: flex; align-items: center;" class="d-flex">
+                                <input type="checkbox" id="checkbox-all" />
+                                <label class="form-check-label" style="text-align: center; margin: 0 20px 0 20px; padding-top: 5px;" for="checkbox-all">Chọn tất cả</label>
+                                <select class="form-select" aria-label="Default select example" name="action" required>
+                                    <option value="add">Thêm vào hóa đơn</option>
+                                </select>
+                                <button id="checkbox-all-submit-btn" type="submit" class="btn btn-primary" disabled style="margin-left: 20px;">Thực hiện</button>
+                            </div>
+
+                            <table>
+                                <tr>
+                                    <th></th>
+                                    <th>STT</th>
+                                    <th>Tên sách</th>
+                                    <th>Số lượng tồn</th>
+                                    <th>Đơn giá</th>
+                                    <th>Số lượng bán</th>
+                                    <th>Chức năng</th>
+                                </tr>
+                                {{#each result}}
+                                <tr>
+                                    <td>
+                                        <input type="checkbox" class="form-check-input" name="checkboxItem[]" value="{{this._id}}" />
+                                    </td>
+                                    <td>{{sum @index 1}}</td>
+
+                                    <td>
+                                        {{this.name}}
+                                    </td>
+                                    <td>
+                                        {{this.quantityStock}}
+                                    </td>
+                                    <td class="price">
+                                        {{!-- {{this.price}} --}} X VNĐ
+                                    </td>
+                                    <td>{{this.quantitySell}}</td>
+                                    <td>
+                                        <button type="submit">Thêm vào hóa đơn</button>
+                                    </td>
+                                </tr>
+                                {{else}}
+                                <tr>
+                                    <td colspan="10" style="text-align: center;">
+                                        <h1>Chưa có sản phẩm</h1>
+                                        {{!-- <a href="/manager/books/create">Nhập sách</a> --}}
+                                    </td>
+                                </tr>
+                                {{/each}}
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+
+    {{>footer-admin}}
+</div>
+
+<script>
+    document.getElementById("dateOrder").value = new Date(Date.now()).toLocaleDateString();
+
+    document.addEventListener("DOMContentLoaded", function () {
+        var bookId;
+        // Checkbox
+        var checkboxAll = $("#checkbox-all");
+        var checkboxBookItem = $('input[name="checkboxItem[]"]');
+        var btnSubmitCheckboxAll = $("#checkbox-all-submit-btn");
+        var containerForm = document.forms["container-form"];
+        //Change checkbox-all
+        checkboxAll.change(function () {
+            var isCheckboxAll = $(this).prop("checked");
+            checkboxBookItem.prop("checked", isCheckboxAll);
+            reRenderButtonSubmitCheckboxAll();
+            btnSubmitCheckboxAll.attr("disabled", false);
+        });
+        // change checkbox item
+        checkboxBookItem.change(function () {
+            var isCheckItem = checkboxBookItem.length === $('input[name="checkboxItem[]"]:checked').length;
+            checkboxAll.prop("checked", isCheckItem);
+            reRenderButtonSubmitCheckboxAll();
+            btnSubmitCheckboxAll.attr("disabled", false);
+        });
+
+        function reRenderButtonSubmitCheckboxAll() {
+            var checkboxCount = $('input[name="checkboxItem[]"]:checked').length;
+            if (checkboxCount > 0) {
+                btnSubmitCheckboxAll.removeClass("disabled");
+            } else {
+                btnSubmitCheckboxAll.addClass("disabled");
+            }
+        }
+    });
+</script>

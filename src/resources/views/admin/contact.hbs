@@ -1,0 +1,160 @@
+{{>menu-down-admin}}
+<div class="all-content-wrapper">
+    {{>logo-header-main}}
+    <div class="header-advance-area">
+        {{>header-top}} {{>search-header}}
+    </div>
+
+    <div class="mailbox-compose-area mg-tb-15">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-3 col-md-3 col-sm-3 col-xs-12">
+                    <div class="hpanel responsive-mg-b-30">
+                        <div class="panel-body">
+                            <a href="mailbox_compose.html" class="btn btn-success compose-btn btn-block m-b-md">Compose</a>
+                            <ul class="mailbox-list">
+                                <li>
+                                    <a href="#">
+                                        <span class="pull-right">12</span>
+                                        <i class="fa fa-envelope"></i> Inbox
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#"><i class="fa fa-paper-plane"></i> Sent</a>
+                                </li>
+                                <li>
+                                    <a href="#"><i class="fa fa-pencil"></i> Draft</a>
+                                </li>
+                                <li>
+                                    <a href="#"><i class="fa fa-trash"></i> Trash</a>
+                                </li>
+                            </ul>
+                            <hr />
+                            <ul class="mailbox-list">
+                                <li>
+                                    <a href="#"><i class="fa fa-plane text-danger"></i> Travel</a>
+                                </li>
+                                <li>
+                                    <a href="#"><i class="fa fa-bar-chart text-warning"></i> Finance</a>
+                                </li>
+                                <li>
+                                    <a href="#"><i class="fa fa-users text-info"></i> Social</a>
+                                </li>
+                                <li>
+                                    <a href="#"><i class="fa fa-tag text-success"></i> Promos</a>
+                                </li>
+                                <li>
+                                    <a href="#"><i class="fa fa-flag text-primary"></i> Updates</a>
+                                </li>
+                            </ul>
+                            <hr />
+                            <ul class="mailbox-list">
+                                <li>
+                                    <a href="#"><i class="fa fa-gears"></i> Settings</a>
+                                </li>
+                                <li>
+                                    <a href="#"><i class="fa fa-info-circle"></i> Support</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-9 col-md-9 col-sm-9 col-xs-12">
+                    <div class="hpanel email-compose mg-b-15">
+                        <div class="panel-heading hbuilt">
+                            <div class="p-xs h4">
+                                Quản lí thông tin liên hệ
+                            </div>
+                        </div>
+                        <div class="panel-heading hbuilt">
+                            {{#each contact}}
+                            <div class="p-xs" style="margin-top: 20px;">
+                                <form method="post" action="/manager/admin/{{this._id}}/update-contact" class="form-horizontal">
+                                    <div class="form-group">
+                                        <label class="col-sm-1 control-label text-left">Cửa hàng:</label>
+                                        <div class="col-sm-11">
+                                            <input type="text" class="form-control input-sm" name="nameStore" value="{{this.nameStore}}" />
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-sm-1 control-label text-left">Email:</label>
+                                        <div class="col-sm-11">
+                                            <input type="text" class="form-control input-sm" name="email" value="{{this.email}}" />
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-sm-1 control-label text-left">Số điện thoại:</label>
+                                        <div class="col-sm-11">
+                                            <input type="text" class="form-control input-sm" name="phoneNumber" value="{{this.phoneNumber}}" />
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-sm-1 control-label text-left">Địa chỉ:</label>
+                                        <div class="col-sm-11">
+                                            <input type="text" class="form-control input-sm" name="address" value="{{this.address}}" />
+                                        </div>
+                                    </div>
+                                    <div class="panel-footer">
+                                        <div class="pull-right">
+                                            <div class="btn-group">
+                                                <button type="submit" href="" class="btn btn-default"><i class="fa fa-edit"></i> Lưu</button>
+                                                {{!-- <a href="#" class="btn btn-default"><i class="fa fa-trash"></i> Xóa</a> --}}
+                                                <a href="#" class="btn btn-default" data-toggle="modal" data-id="{{this._id}}" data-target="#deleted-contact"> <i class="fa fa-trash-o" aria-hidden="true"></i> Xóa </a>
+                                            </div>
+                                        </div>
+                                        <button class="btn btn-primary ft-compse">Cập nhật địa chỉ chính</button>
+                                    </div>
+                                </form>
+                            </div>
+                            {{else}} Chưa có thông tin liên hệ nào cả !!! {{/each}}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {{>footer-admin}}
+</div>
+
+<div class="modal" id="deleted-contact" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Xóa sách ?</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                Bạn có chắc chắn muốn xóa cuốn sách này không ?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Trở lại</button>
+                <button type="button" id="delete-contact-btn" class="btn btn-primary">Xóa bỏ</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<form name="deleted-contact-form" method="POST"></form>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        let contactId;
+        const deletedContact = document.getElementById("deleted-contact");
+        const deletedBtn = document.getElementById("delete-contact-btn");
+        const deletedForm = document.forms["deleted-contact-form"];
+
+        $("#deleted-contact").on("show.bs.modal", function (event) {
+            var button = $(event.relatedTarget); // Button that triggered the modal
+            contactId = button.data("id"); // Extract info from data-* attributes
+        });
+
+        deletedBtn.onclick = function () {
+            deletedForm.action = "/manager/admin/deleted-contact/" + contactId + "?_method=DELETE";
+            deletedForm.submit();
+        };
+        console.log(deletedContact, deletedBtn, deletedForm);
+    });
+</script>

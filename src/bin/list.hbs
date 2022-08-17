@@ -1,0 +1,195 @@
+{{>logo-header-main}}
+<div class="header-advance-area">
+    {{>header-top}} {{>search-header}}
+</div>
+<form action="/books/hand-form-action" name="container-form" method="POST">
+    <div class="product-status mg-tb-15">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <div class="product-status-wrap">
+                        <h4>Danh sách sản phẩm ({{countBooks}})</h4>
+                        <div class="add-product">
+                            <a href="/books/create">Add Product</a>
+                        </div>
+                        <div style="display: flex; align-items: center;" class="d-flex">
+                            <input type="checkbox" id="checkbox-all" />
+                            <label class="form-check-label" style="text-align: center; margin: 0 20px 0 20px; padding-top: 5px;" for="checkbox-all">Chọn tất cả</label>
+                            <select class="form-select" aria-label="Default select example" name="action" required>
+                                <option value="">-- Chọn chức năng --</option>
+                                <option value="deleted">Xóa</option>
+                                <option value="status-true">Hiển thị</option>
+                                <option value="status-false">Không hiển thị</option>
+                            </select>
+                            <button id="checkbox-all-submit-btn" class="btn btn-primary disabled" style="margin-left: 20px;">Thực hiện</button>
+                        </div>
+
+                        <table>
+                            <tr>
+                                <th></th>
+                                <th>STT</th>
+                                <th>Hình ảnh</th>
+                                <th>Tên sách {{{sortable 'name' _sort}}}</th>
+                                <th>Trạng thái {{{sortable 'status' _sort}}}</th>
+                                <th>Số lượng bán {{{sortable 'quantityCell' _sort}}}</th>
+                                <th>Tiền thu được</th>
+                                <th>Số lượng tồn {{{sortable 'quantityStock' _sort}}}</th>
+                                <th>Giá {{{sortable 'price' _sort}}}</th>
+                                <th>Chức năng</th>
+                            </tr>
+                            {{#each books}}
+                            <tr>
+                                <td>
+                                    <input type="checkbox" class="form-check-input" name="checkboxItem[]" value="{{this._id}}" />
+                                </td>
+                                <td>{{sum @index 1}}</td>
+                                <td><img src="/assets/img/product/{{this.image}}" alt="" /></td>
+
+                                <td>{{this.name}}</td>
+                                <td>
+                                    {{#if this.status}}
+                                    <form action="/books/{{this._id}}/update-status?status=true" class="form" method="POST">
+                                        <button data-id="{{this._id}}" id="btn-status-active" class="pd-setting">Active</button>
+                                    </form>
+                                    {{else}}
+                                    <form action="/books/{{this._id}}/update-status?status=false" method="POST">
+                                        <button data-id="{{this._id}}" id="btn-status-disable" class="ds-setting">Disabled</button>
+                                    </form>
+                                    {{/if}}
+                                </td>
+                                <td>{{this.quantitySell}}</td>
+                                <td>{{multip this.price this.quantityStock}} VND</td>
+                                <td>{{this.quantityStock}}</td>
+                                <td class="price">{{this.price}} VNĐ</td>
+                                <td>
+                                    <a href="/books/{{this._id}}/edit" data-toggle="tooltip" title="Edit" class="pd-setting-ed"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
+                                    <a href="#" class="btn btn-primary btn-link" data-toggle="modal" data-id="{{this._id}}" data-target="#delete-book-modal">
+                                        <i class="fa fa-trash-o" aria-hidden="true"></i>
+                                    </a>
+                                </td>
+                            </tr>
+                            {{else}}
+                            <tr>
+                                <td colspan="10" style="text-align: center;">
+                                    <h1>Bạn chưa đăng bán cuốn sách nào</h1>
+                                    <a href="/books/create">Nhập sách</a>
+                                </td>
+                            </tr>
+                            {{/each}}
+                        </table>
+                        <div class="custom-pagination">
+                            <nav aria-label="Page navigation example">
+                                <ul class="pagination">
+                                    <li class="page-item"><a class="page-link" href="#">Previous</a></li>
+                                    {{#for 1 pageNumber 1}}
+                                    <li class="page-item"><a class="page-link" href="/books/list?page={{this}}&limit=5">{{this}}</a></li>
+                                    {{/for}}
+
+                                    <li class="page-item"><a class="page-link" href="#">Next</a></li>
+                                </ul>
+                            </nav>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+{{!-- form delete --}}
+<form name="delete-book-form" method="POST"></form>
+<form name="change-status-book-form" method="POST"></form>
+{{!-- Model delete --}}
+
+<div class="modal" id="delete-book-modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Xóa sách ?</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                Bạn có chắc chắn muốn xóa cuốn sách này không ?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Trở lại</button>
+                <button type="button" id="delete-book-btn" class="btn btn-primary">Xóa bỏ</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        var bookId;
+        var deleteBookModal = document.getElementById("delete-book-modal");
+        var formDelete = document.forms["delete-book-form"];
+        var deleteBookBtn = document.getElementById("delete-book-btn");
+        // Checkbox
+        var checkboxAll = $("#checkbox-all");
+        var checkboxBookItem = $('input[name="checkboxItem[]"]');
+        var btnSubmitCheckboxAll = $("#checkbox-all-submit-btn");
+        var containerForm = document.forms["container-form"];
+        // status
+        var statusActiveBtn = $("#btn-status-active");
+        var statusDisableBtn = $("#btn-status-disable");
+
+        var changeStatusForm = document.forms["change-status-book-form"];
+
+        $("#delete-book-modal").on("show.bs.modal", function (event) {
+            var button = $(event.relatedTarget); // Button that triggered the modal
+            bookId = button.data("id"); // Extract info from data-* attributes
+        });
+
+        deleteBookBtn.onclick = function () {
+            formDelete.action = "/books/" + bookId + "?_method=DELETE";
+            formDelete.submit();
+        };
+
+        statusActiveBtn.click(function (e) {
+            e.preventDefault();
+            const id = $(this).data("id");
+            changeStatusForm.action = "/books/" + id + "/update-status?status=true";
+            changeStatusForm.submit();
+        });
+
+        statusDisableBtn.click(function (e) {
+            e.preventDefault();
+            const id = $(this).data("id");
+            changeStatusForm.action = "/books/" + id + "/update-status?status=false";
+            changeStatusForm.submit();
+        });
+
+        //Change checkbox-all
+        checkboxAll.change(function () {
+            var isCheckboxAll = $(this).prop("checked");
+            checkboxBookItem.prop("checked", isCheckboxAll);
+            reRenderButtonSubmitCheckboxAll();
+        });
+        // change checkbox item
+        checkboxBookItem.change(function () {
+            var isCheckItem = checkboxBookItem.length === $('input[name="checkboxItem[]"]:checked').length;
+            checkboxAll.prop("checked", isCheckItem);
+            reRenderButtonSubmitCheckboxAll();
+        });
+
+        function reRenderButtonSubmitCheckboxAll() {
+            var checkboxCount = $('input[name="checkboxItem[]"]:checked').length;
+            if (checkboxCount > 0) {
+                btnSubmitCheckboxAll.removeClass("disabled");
+            } else {
+                btnSubmitCheckboxAll.addClass("disabled");
+            }
+        }
+
+        // changed default event submit
+        containerForm.on("submit", function (e) {
+            var valid = btnSubmitCheckboxAll.hasClass("disabled");
+            if (valid) {
+                e.preventDefault();
+            }
+        });
+    });
+</script>

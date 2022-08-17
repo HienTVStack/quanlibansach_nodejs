@@ -1,0 +1,212 @@
+{{>topbar-client}} {{>navbar-client}} {{>page-header-client}}
+<!-- Checkout Start -->
+<form action="/dat-hang" method="POST">
+    <div class="container-fluid pt-5">
+    <div class="row px-xl-5">
+        <div class="col-lg-7">
+            <div class="mb-4">
+                <h4 class="font-weight-semi-bold mb-4">Thông tin khách hàng</h4>
+                <div class="row">
+                    {{!--
+                    <div class="col-md-6 form-group">
+                        <label>First Name</label>
+                        <input class="form-control" type="text" placeholder="John" />
+                    </div>
+                    --}}
+                    <div class="col-md-6 form-group">
+                        <label>Full Name</label>
+                        <input class="form-control" type="text" value="{{customer.fullName}}" placeholder="Doe" />
+                    </div>
+                    <div class="col-md-6 form-group">
+                        <label>E-mail</label>
+                        <input class="form-control" type="text" value="{{customer.email}}" placeholder="example@email.com" />
+                    </div>
+                    <div class="col-md-6 form-group">
+                        <label>Mobile No</label>
+                        <input class="form-control" type="text" value="{{customer.phoneNumber}}" placeholder="+123 456 789" />
+                    </div>
+                    <div class="col-md-6 form-group">
+                        <label>Address</label>
+                        <input class="form-control" type="text" name="address" value="{{this.address}}" placeholder="123 Street" />
+                    </div>
+                    {{!--
+                    <div class="col-md-6 form-group">
+                        <label>Address Line 2</label>
+                        <input class="form-control" type="text" placeholder="123 Street" />
+                    </div>
+                    --}} {{!--
+                    <div class="col-md-6 form-group">
+                        <label>Country</label>
+                        <select class="custom-select">
+                            <option selected>United States</option>
+                            <option>Afghanistan</option>
+                            <option>Albania</option>
+                            <option>Algeria</option>
+                        </select>
+                    </div>
+                    --}} {{!--
+                    <div class="col-md-6 form-group">
+                        <label>City</label>
+                        <input class="form-control" type="text" placeholder="New York" />
+                    </div>
+                    <div class="col-md-6 form-group">
+                        <label>State</label>
+                        <input class="form-control" type="text" placeholder="New York" />
+                    </div>
+                    --}} {{!--
+                    <div class="col-md-6 form-group">
+                        <label>ZIP Code</label>
+                        <input class="form-control" type="text" placeholder="123" />
+                    </div>
+                    --}}
+                    <div class="col-md-12 form-group">
+                        <div class="custom-control custom-checkbox">
+                            <input type="checkbox" class="custom-control-input" name="checkedAddress" id="newAddress" />
+                            <label class="custom-control-label" for="newAddress">Lưu thay đổi địa chỉ giao hàng mặc định</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {{!--
+            <div class="collapse mb-4" id="shipping-address">
+                <h4 class="font-weight-semi-bold mb-4">Shipping Address</h4>
+                <div class="row">
+                    <div class="col-md-6 form-group">
+                        <label>First Name</label>
+                        <input class="form-control" type="text" placeholder="John" />
+                    </div>
+                    <div class="col-md-6 form-group">
+                        <label>Last Name</label>
+                        <input class="form-control" type="text" placeholder="Doe" />
+                    </div>
+                    <div class="col-md-6 form-group">
+                        <label>E-mail</label>
+                        <input class="form-control" type="text" placeholder="example@email.com" />
+                    </div>
+                    <div class="col-md-6 form-group">
+                        <label>Mobile No</label>
+                        <input class="form-control" type="text" placeholder="+123 456 789" />
+                    </div>
+                    <div class="col-md-6 form-group">
+                        <label>Address Line 1</label>
+                        <input class="form-control" type="text" placeholder="123 Street" />
+                    </div>
+                    <div class="col-md-6 form-group">
+                        <label>Address Line 2</label>
+                        <input class="form-control" type="text" placeholder="123 Street" />
+                    </div>
+                    <div class="col-md-6 form-group">
+                        <label>Country</label>
+                        <select class="custom-select">
+                            <option selected>United States</option>
+                            <option>Afghanistan</option>
+                            <option>Albania</option>
+                            <option>Algeria</option>
+                        </select>
+                    </div>
+                    <div class="col-md-6 form-group">
+                        <label>City</label>
+                        <input class="form-control" type="text" placeholder="New York" />
+                    </div>
+                    <div class="col-md-6 form-group">
+                        <label>State</label>
+                        <input class="form-control" type="text" placeholder="New York" />
+                    </div>
+                    <div class="col-md-6 form-group">
+                        <label>ZIP Code</label>
+                        <input class="form-control" type="text" placeholder="123" />
+                    </div>
+                </div>
+            </div>
+            --}}
+        </div>
+        <div class="col-lg-5">
+            <div class="card border-secondary mb-5">
+                <div class="card-header bg-secondary border-0">
+                    <h4 class="font-weight-semi-bold m-0">Thông tin đặt hàng</h4>
+                </div>
+                <div class="card-body">
+                    <h5 class="font-weight-medium mb-3">Sản phẩm</h5>
+                    {{#each books}}
+                    <div class="d-flex justify-content-between">
+                        <p>{{this.name}}</p>
+                        <p class="price">{{this.price}}</p>
+                    </div>
+                    {{/each}} 
+                   
+                    <hr class="mt-0" />
+                    <div class="d-flex justify-content-between mb-3 pt-1">
+                        <h6 class="font-weight-medium">Tổng: </h6>
+                        <h6 class="font-weight-medium" id="totalPrice"></h6>
+                    </div>
+                    <div class="d-flex justify-content-between">
+                        <h6 class="font-weight-medium">Phí giao hàng</h6>
+                        <h6 class="font-weight-medium">20.000 VNĐ</h6>
+                    </div>
+                </div>
+                <div class="card-footer border-secondary bg-transparent">
+                    <div class="d-flex justify-content-between mt-2">
+                        <h5 class="font-weight-bold">Tổng cộng: </h5>
+                        <h5 class="font-weight-bold" id="totalAll"></h5>
+                    </div>
+                </div>
+            </div>
+            <div class="card border-secondary mb-5">
+                <div class="card-header bg-secondary border-0">
+                    <h4 class="font-weight-semi-bold m-0">Thanh toán</h4>
+                </div>
+                <div class="card-body">
+                    {{#each payments}}
+                        <div class="form-group">
+                            <div class="custom-control custom-radio">
+                                <input type="radio" class="custom-control-input" name="payment" value="{{this.slug}}" id="{{this.slug}}" />
+                                <label class="custom-control-label" for="{{this.slug}}">{{this.name}}</label>
+                            </div>
+                        </div>
+                    {{/each}}
+                    
+                </div>
+                <div class="card-footer border-secondary bg-transparent">
+                    <button type="submit" class="btn btn-lg btn-block btn-primary font-weight-bold my-3 py-3">Đặt hàng</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</form>
+
+<!-- Checkout End -->
+{{>footer-client}}
+<script>
+    let priceItem = document.querySelectorAll(".price");
+    let totalAll = document.getElementById('totalAll');
+    let totalPrice = 0;
+    function main() {
+        // Format priceItem element
+        for (let i = 0; i < priceItem.length; i++) {
+            totalPrice += parseInt(priceItem[i].textContent);
+            priceItem[i].textContent = formatCash(priceItem[i].textContent) + " VNĐ"
+        }
+         document.getElementById('totalPrice').textContent = `${formatCash(String(totalPrice))} VNĐ`;
+        totalAll.textContent = `${formatCash(String(totalPrice + 20000))} VNĐ`
+    }
+    // Run main
+    main();
+    // Format VND
+    function formatCash(str) {
+        return str
+            .split("")
+            .reverse()
+            .reduce((prev, next, index) => {
+                return (index % 3 ? next : next + ".") + prev;
+            });
+    }
+   
+    
+    
+    
+
+</script>
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
+<script src="/assets/js/client/main.js"></script>

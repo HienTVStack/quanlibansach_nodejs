@@ -1,0 +1,125 @@
+{{>menu-down-admin}}
+<div class="all-content-wrapper">
+    {{>logo-header-main}}
+    <div class="header-advance-area">
+        {{>header-top}} {{>search-header}}
+    </div>
+
+    <div class="mailbox-compose-area mg-tb-15">
+        <div class="container-fluid">
+            <div class="row">
+                {{!--
+                <div class="col-md-3 col-md-3 col-sm-3 col-xs-12">
+                    <div class="hpanel responsive-mg-b-30">
+                        <div class="panel-body">
+                            <a href="mailbox_compose.html" class="btn btn-success compose-btn btn-block m-b-md">Compose</a>
+                            <ul class="mailbox-list">
+                                <li>
+                                    <a href="#">
+                                        <span class="pull-right">12</span>
+                                        <i class="fa fa-envelope"></i> Inbox
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#"><i class="fa fa-paper-plane"></i> Sent</a>
+                                </li>
+                                <li>
+                                    <a href="#"><i class="fa fa-pencil"></i> Draft</a>
+                                </li>
+                                <li>
+                                    <a href="#"><i class="fa fa-trash"></i> Trash</a>
+                                </li>
+                            </ul>
+                            <hr />
+                            <ul class="mailbox-list">
+                                <li>
+                                    <a href="#"><i class="fa fa-plane text-danger"></i> Travel</a>
+                                </li>
+                                <li>
+                                    <a href="#"><i class="fa fa-bar-chart text-warning"></i> Finance</a>
+                                </li>
+                                <li>
+                                    <a href="#"><i class="fa fa-users text-info"></i> Social</a>
+                                </li>
+                                <li>
+                                    <a href="#"><i class="fa fa-tag text-success"></i> Promos</a>
+                                </li>
+                                <li>
+                                    <a href="#"><i class="fa fa-flag text-primary"></i> Updates</a>
+                                </li>
+                            </ul>
+                            <hr />
+                            <ul class="mailbox-list">
+                                <li>
+                                    <a href="#"><i class="fa fa-gears"></i> Settings</a>
+                                </li>
+                                <li>
+                                    <a href="#"><i class="fa fa-info-circle"></i> Support</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                --}}
+                <div class="col-md-12 col-md-12 col-sm-12 col-xs-12">
+                    <div class="hpanel email-compose mg-b-15">
+                        <div class="panel-heading hbuilt">
+                            <div class="p-xs h4">
+                                Thêm thông tin liên hệ
+                            </div>
+                        </div>
+                        <div class="panel-heading hbuilt">
+                            <div class="p-xs">
+                                <form method="post" action="/manager/admin/contact-add" class="form-horizontal">
+                                    <div class="form-group">
+                                        <label class="col-sm-1 control-label text-left">Cửa hàng:</label>
+                                        <div class="col-sm-11">
+                                            <input type="text" class="form-control input-sm" name="nameStore" placeholder="Cửa hàng 1" />
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-sm-1 control-label text-left">Email:</label>
+                                        <div class="col-sm-11">
+                                            <input type="text" class="form-control input-sm" name="email" placeholder="contact@gmail.com" />
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-sm-1 control-label text-left">Số điện thoại:</label>
+                                        <div class="col-sm-11">
+                                            <input type="text" class="form-control input-sm" name="phoneNumber" placeholder="+84 33 712 2712" />
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-sm-1 control-label text-left">Địa chỉ:</label>
+                                        <div class="col-sm-11">
+                                            <input type="text" class="form-control input-sm" name="address" placeholder="140 Le Trong Tan" />
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-sm-1 control-label text-left">Hiển thị:</label>
+                                        <div class="form-group">
+                                            <input type="radio" checked name="status" value="true" />
+                                            <label for="status" class="control-label">Hiển thị</label>
+
+                                            <input type="radio" name="status" value="false" />
+                                            <label for="status" class="control-label">Ẩn đi</label>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <input type="checkbox" name="main" />
+                                        <label for="main">Đặt làm mặc định</label>
+                                    </div>
+                                    <div class="panel-footer">
+                                        <button class="btn btn-primary ft-compse">Thêm mới</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {{>footer-admin}}
+</div>

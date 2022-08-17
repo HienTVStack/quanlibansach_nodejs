@@ -1,0 +1,208 @@
+{{>topbar-client}} {{>navbar-client}} {{>page-header-client}}
+<div class="container-fluid pt-5">
+    <div class="text-center mb-4">
+        <h2 class="section-title px-5"><span class="px-2">Contact For Any Queries</span></h2>
+    </div>
+    <div class="row px-xl-5">
+        <div class="col-lg-7 mb-5">
+            <div class="contact-form">
+                <div id="success"></div>
+                <form name="sentMessage" id="contactForm" action="/sendMail" novalidate="novalidate" method="POST">
+                    <div class="control-group">
+                        <input type="text" class="form-control" id="name" name="name" placeholder="Tên hiển thị" required="required" data-validation-required-message="Please enter your name" />
+                        <p class="help-block text-danger"></p>
+                    </div>
+                    <div class="control-group">
+                        <input type="email" class="form-control" id="email" placeholder="Email..." required="required" data-validation-required-message="Please enter your email" name="email" />
+                        <p class="help-block text-danger"></p>
+                    </div>
+                    <div class="control-group">
+                        <input type="text" class="form-control" id="subject" name="subject" placeholder="Tiêu đề" required="required" data-validation-required-message="Please enter a subject" />
+                        <p class="help-block text-danger"></p>
+                    </div>
+                    <div class="control-group">
+                        <textarea class="form-control" rows="6" id="message" name="message" placeholder="Tin nhắn" required="required" data-validation-required-message="Please enter your message"></textarea>
+                        <p class="help-block text-danger"></p>
+                    </div>
+                    <div>
+                        <button class="btn btn-primary py-2 px-4" type="submit" id="sendMessageButton">Gửi tin nhắn</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="col-lg-5 mb-5">
+            <h5 class="font-weight-semi-bold mb-3">Liên hệ với chúng tôi</h5>
+            <p>
+                Mọi thông tin, mọi góp ý của khách hàng chúng tôi điều ghi nhận và khắc phục.
+            </p>
+            {{#each contact}}
+            <div class="d-flex flex-column">
+                <h5 class="font-weight-semi-bold mb-3">{{this.nameStore}}</h5>
+                <p class="mb-2"><i class="fa fa-map-marker-alt text-primary mr-3"></i>{{this.address}}</p>
+                <p class="mb-2"><i class="fa fa-envelope text-primary mr-3"></i>{{this.email}}</p>
+                <p class="mb-0"><i class="fa fa-phone-alt text-primary mr-3"></i>{{this.phoneNumber}}</p>
+            </div>
+            {{else}}
+            <div class="d-flex flex-column mb-3">
+                <h5 class="font-weight-semi-bold mb-3">Store 1</h5>
+                <p class="mb-2"><i class="fa fa-map-marker-alt text-primary mr-3"></i>123 Street, New York, USA</p>
+                <p class="mb-2"><i class="fa fa-envelope text-primary mr-3"></i>info@example.com</p>
+                <p class="mb-2"><i class="fa fa-phone-alt text-primary mr-3"></i>+012 345 67890</p>
+            </div>
+            {{/each}}
+        </div>
+    </div>
+</div>
+<!-- Contact End -->
+<style>
+    .nut-mo-chatbox {
+        background-color: #555;
+        color: white;
+        padding: 16px 20px;
+        border: none;
+        cursor: pointer;
+        opacity: 0.8;
+        position: fixed;
+        bottom: 23px;
+        right: 28px;
+        width: 280px;
+    }
+    .Chatbox {
+        display: none;
+        position: fixed;
+        bottom: 0;
+        right: 15px;
+        border: 3px solid #f1f1f1;
+        z-index: 9;
+        max-height: 500px;
+    }
+    .form-container {
+        width: 500px;
+        padding: 10px;
+        background-color: white;
+        margin-bottom: 85px;
+    }
+    .chat-main {
+        width: 100%;
+        padding: 5px;
+        margin: 5px 0 22px 0;
+        border: none;
+        background: #f1f1f1;
+        resize: none;
+        min-height: 100px;
+    }
+    .chat-main {
+        background-color: #fff;
+        color: #000;
+        padding: 16px 20px;
+        border: 1px solid #ccc;
+        cursor: pointer;
+        width: 100%;
+        margin-bottom: 10px;
+        opacity: 0.8;
+    }
+    .message {
+        background-color: #b3d4fc;
+    }
+    #chat-form {
+        display: flex;
+        width: 100%;
+    }
+</style>
+<button class="nut-mo-chatbox" onclick="moForm()">Chat</button>
+<div class="chat-container Chatbox form-container" id="myForm">
+    <h1>Hổ trợ</h1>
+    <label for="msg"><b>Nội dung cuộc hội thoại</b></label>
+    <div class="chat-main">
+        <div class="chat-messages" style="width: 100%;"></div>
+    </div>
+    <hr />
+    <form id="chat-form">
+        <input id="msg" type="text" placeholder="Enter Message" required autocomplete="off" style="width: 100%;" />
+        <button class="btn btn-primary">Gửi</button>
+    </form>
+</div>
+
+{{>footer-client}}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qs/6.9.2/qs.min.js" integrity="sha256-TDxXjkAUay70ae/QJBEpGKkpVslXaHHayklIVglFRT4=" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
+<script src="/assets/js/client/main.js"></script>
+<script src="/socket.io/socket.io.js"></script>
+<script>
+    /*Hàm Mở Form*/
+    function moForm() {
+        document.getElementById("myForm").style.display = "block";
+    }
+    /*Hàm Đóng Form*/
+    function dongForm() {
+        document.getElementById("myForm").style.display = "none";
+    }
+
+    const chatForm = document.getElementById("chat-form");
+    const chatMessages = document.querySelector(".chat-messages");
+    const roomName = document.getElementById("room-name");
+    const userList = document.getElementById("users");
+
+    // Get username and room from URL
+    const { username, room } = Qs.parse(location.search, {
+        ignoreQueryPrefix: true,
+    });
+
+    const socket = io();
+
+    // Join chatroom
+    socket.emit("joinRoom", { username, room });
+
+    // Get room and users
+    socket.on("roomUsers", ({ room, users }) => {
+        //outputRoomName(room);
+        //outputUsers(users);
+    });
+
+    // Message from server
+    socket.on("message", (message) => {
+        console.log(message);
+        outputMessage(message);
+
+        // Scroll down
+        chatMessages.scrollTop = chatMessages.scrollHeight;
+    });
+
+    // Message submit
+    chatForm.addEventListener("submit", (e) => {
+        e.preventDefault();
+
+        // Get message text
+        let msg = e.target.elements.msg.value;
+
+        msg = msg.trim();
+
+        if (!msg) {
+            return false;
+        }
+
+        // Emit message to server
+        socket.emit("chatMessage", msg);
+
+        // Clear input
+        e.target.elements.msg.value = "";
+        e.target.elements.msg.focus();
+    });
+
+    // Output message to DOM
+    function outputMessage(message) {
+        const div = document.createElement("div");
+        div.classList.add("message");
+        const p = document.createElement("p");
+        p.classList.add("meta");
+        p.innerText = message.username;
+        p.innerHTML += `<span>${message.time}</span>`;
+        div.appendChild(p);
+        const para = document.createElement("p");
+        para.classList.add("text");
+        para.innerText = message.text;
+        div.appendChild(para);
+        document.querySelector(".chat-messages").appendChild(div);
+    }
+</script>
